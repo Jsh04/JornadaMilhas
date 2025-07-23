@@ -8,7 +8,7 @@
                 <button type="button" class="text-white">Vender milhas</button>
             </div>
             <div><button type="button" class="text-white">Sobre</button></div>
-            <div><button type="button" class="uppercase text-white bg-purple-primary">Cadastre-se</button></div>
+            <div><button type="button" class="uppercase text-white bg-purple-primary py-2 px-4 rounded-lg">Cadastre-se</button></div>
             <div><button type="button" class="uppercase text-white">Login</button></div>
         </div>
     </header>
