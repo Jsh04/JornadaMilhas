@@ -6,4 +6,8 @@ import HomeHeader from './views/home/components/HomeHeader.vue';
 
 <template>
   <HomeHeader />
+  <main>
+    <router-view></router-view>
+  </main>
+  
 </template>

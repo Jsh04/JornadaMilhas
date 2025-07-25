@@ -1,0 +1,14 @@
+@import "tailwindcss";
+@import './buttons/style.css';
+
+@tailwind utilities;
+
+@theme {
+  --color-purple-primary: #6750A4
+}
+
+@layer base {
+  html {
+    font-family: 'Roboto', sans-serif, Arial, Helvetica
+  }
+}
