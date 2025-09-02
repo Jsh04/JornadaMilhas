@@ -1,6 +1,5 @@
 import { injectable } from "inversify";
 
-
 export interface EnvVariables {
   API_URL: string;
   APP_ENV: 'development' | 'staging' | 'production';
@@ -11,7 +10,6 @@ export interface EnvVariables {
 
 export type EnvKey = keyof EnvVariables;
 
-// Tipo para os valores de configuração
 export type EnvValue = EnvVariables[EnvKey];
 
 declare global {
@@ -141,10 +139,9 @@ export default class EnvironmentConfig {
       errors.push('API_URL deve ser uma URL válida');
     }
 
-    // Validar timeout
-    if (this.config.API_TIMEOUT <= 0) {
+    if (this.config.API_TIMEOUT <= 0) 
       errors.push('API_TIMEOUT deve ser maior que 0');
-    }
+    
 
     // Validar versão
     if (!this.config.APP_VERSION.match(/^\d+\.\d+\.\d+/)) {

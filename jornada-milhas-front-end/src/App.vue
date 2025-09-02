@@ -5,9 +5,12 @@ import HomeHeader from './views/home/components/HomeHeader.vue';
 </script>
 
 <template>
-  <HomeHeader />
-  <main>
-    <router-view></router-view>
-  </main>
+  <div class="h-screen grid grid-rows-[auto_1fr]">
+    <HomeHeader />
+    <main>
+      <router-view></router-view>
+    </main>
+  </div>
+ 
   
 </template>

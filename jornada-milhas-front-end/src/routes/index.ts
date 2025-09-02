@@ -1,17 +1,32 @@
 import { createRouter, createWebHistory, type Router } from "vue-router";
 import EnvironmentConfig from '../config/EnvironmentConfig';
+import { inject, injectable } from "inversify";
+import HomeHeader from "../views/home/components/HomeHeader.vue";
+import Login from "../views/login/Login.vue";
+import Home from "../views/home/Home.vue";
 
 
+@injectable()
 export default class RouterConfig {
     private readonly router: Router;
     private readonly environmentConfig: EnvironmentConfig;
 
-    constructor(environmentConfig: EnvironmentConfig) {
+    constructor(@inject(EnvironmentConfig) environmentConfig: EnvironmentConfig) {
         this.environmentConfig = environmentConfig;
 
         this.router = createRouter({
             history: createWebHistory(this.getBaseUrl()),
-            routes: []
+            routes: [
+                {
+                    path: '/',
+                    component: Home,
+                    alias: '/home',
+                },
+                {
+                    path: '/login',
+                    component: Login,
+                }
+            ]
         })
     }
 

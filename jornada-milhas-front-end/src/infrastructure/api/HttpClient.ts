@@ -9,6 +9,7 @@ export default class HttpClient {
 
     private httpClient: AxiosInstance;
     private readonly environmentConfig: EnvironmentConfig
+    
     constructor(@inject(EnvironmentConfig) environmentConfig: EnvironmentConfig) {
         this.environmentConfig = environmentConfig;
         this.httpClient = this.getInstanceAxios(this.environmentConfig)
