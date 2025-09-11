@@ -1,7 +1,6 @@
 @import "tailwindcss";
 @import './buttons/style.css';
 @import './inputs/input-common.css';
-@import "tailwindcss";
 @import "tailwindcss-primeui";
 
 @tailwind utilities;

@@ -1,21 +1,24 @@
 <template>
     <section class="flex-1 flex justify-center items-center">
-        <article class="min-h-[50vh] min-w-[40vw] inset-shadow-sm rounded-xl grid grid-rows-[1fr_auto] p-4">
-            <div class="grid grid-cols-2 items-center">
+        <article class="min-h-[50vh] min-w-[40vw] shadow-container rounded-xl grid grid-rows-[1fr_auto] p-8">
+            <div class="grid grid-cols-2 items-center p-4">
                 <div
                     class="bg-[url(/src/assets/Simbolo-laranja.png)] bg-cover bg-center bg-no-repeat w-[200px] h-[200px] place-self-center">
                 </div>
-                <div class="grid grid-rows-3 gap-y-4">
+                <div class="grid grid-rows-3 gap-y-8">
                     <div>
-                        <h2 class="text-3xl text-[#1D1B20] font-normal">Login</h2>
+                        <h2 class="text-3xl text-[#1D1B20] font-medium">Login</h2>
                     </div>
                     <div>
                         <InputText id-input="emailOrCpf" placeholder-input="Digite seu e-mail ou CPF"
-                            label-input="E-mail ou CPF" v-model="loginInputModel.loginData" />
+                            label-input="E-mail ou CPF" v-model="loginInputModel.loginData" @blur="vuelidateObject.loginData.$touch()"  />
+                        <InputMessageErrorVuelidate :validate-object="vuelidateObject.loginData" />
                     </div>
                     <div>
                         <InputText id-input="password" type-input="password" placeholder-input="Digite sua senha" label-input="Senha "
-                            v-model="loginInputModel.password" />
+                            v-model="loginInputModel.password" @blur="vuelidateObject.password.$touch()" />
+                        <InputMessageErrorVuelidate :validate-object="vuelidateObject.password" />
+                        
                     </div>
                     <div>
                         <ButtonPrimary button-text="ACESSAR MINHA CONTA" :complemnetary-class="['w-full']" />
@@ -34,11 +37,25 @@
 <script setup lang="ts">
 import InputText from '../../../shared/components/inputs/InputText.vue';
 import { LoginViewModel } from '../../../application/useCases/LoginUseCase/LoginViewModel';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import ButtonPrimary from '../../../shared/components/buttons/ButtonPrimary.vue';
+import useVuelidate from '@vuelidate/core';
+import { loginValidation } from '../validations/LoginValidation';
+import InputMessageErrorVuelidate from '../../validations/InputMessageErrorVuelidate.vue';
 
 const loginInputModel = ref<LoginViewModel>(new LoginViewModel());
 
+const rules = computed(() => loginValidation());
+
+const vuelidateObject = useVuelidate<LoginViewModel>(
+  rules,
+  loginInputModel
+);
+
 </script>
 
-<style scoped></style>
+<style scoped>
+.shadow-container{
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+</style>

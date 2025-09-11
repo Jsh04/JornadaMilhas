@@ -1,7 +1,7 @@
 import type { AxiosInstance } from "axios";
 import axios from "axios";
 import { inject, injectable } from "inversify";
-import EnvironmentConfig from '../../config/EnvironmentConfig';
+import EnvironmentConfig from '../config/EnvironmentConfig';
 
 
 @injectable()
@@ -14,6 +14,11 @@ export default class HttpClient {
         this.environmentConfig = environmentConfig;
         this.httpClient = this.getInstanceAxios(this.environmentConfig)
         this.setConfigRequest();
+    }
+
+
+    get instanceHttpClient(){
+        return this.httpClient;
     }
 
     setConfigRequest() {
