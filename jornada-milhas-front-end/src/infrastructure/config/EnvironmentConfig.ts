@@ -49,7 +49,7 @@ export default class EnvironmentConfig {
     }
 
     return {
-      API_URL: this.getEnvVar('VITE_API_URL', '__API_URL__', 'http://localhost:3000/api'),
+      API_URL: this.getEnvVar('VITE_API_URL', '__API_URL__', 'http://localhost:5045/api'),
       APP_ENV: this.getEnvVar('VITE_APP_ENV', '__APP_ENV__', 'development') as EnvVariables['APP_ENV'],
       APP_VERSION: this.getEnvVar('VITE_APP_VERSION', '__APP_VERSION__', '1.0.0'),
       API_TIMEOUT: this.parseNumber(this.getEnvVar('VITE_API_TIMEOUT', '__API_TIMEOUT__', '30000'), 30000),
@@ -156,15 +156,13 @@ export default class EnvironmentConfig {
 
   // Método para debug (apenas em desenvolvimento)
   public debug(): void {
-    if (this.isDevelopment() && this.config.ENABLE_DEBUG) {
-      console.group('🔧 Configurações de Ambiente');
-      console.table(this.config);
-      console.groupEnd();
-
-      const validation = this.validate();
-      if (!validation.isValid) {
-        console.warn('⚠️ Problemas na configuração:', validation.errors);
-      }
-    }
+    const logger = this.isDevelopment() ? console : console;
+    
+    logger.info('Environment configuration loaded', {
+      environment: this.config.APP_ENV,
+      version: this.config.APP_VERSION,
+      // Não logar dados sensíveis
+      configKeys: Object.keys(this.config)
+    });
   }
 }

@@ -21,7 +21,7 @@
                         
                     </div>
                     <div>
-                        <ButtonPrimary button-text="ACESSAR MINHA CONTA" :complemnetary-class="['w-full']" />
+                        <ButtonPrimary button-text="ACESSAR MINHA CONTA" :complemnetary-class="['w-full']" @click="sendLoginToBack()"/>
                     </div>
                 </div>
             </div>
@@ -37,11 +37,19 @@
 <script setup lang="ts">
 import InputText from '../../../shared/components/inputs/InputText.vue';
 import { LoginViewModel } from '../../../application/useCases/LoginUseCase/LoginViewModel';
-import { computed, ref } from 'vue';
+import { computed, inject, ref } from 'vue';
 import ButtonPrimary from '../../../shared/components/buttons/ButtonPrimary.vue';
 import useVuelidate from '@vuelidate/core';
 import { loginValidation } from '../validations/LoginValidation';
 import InputMessageErrorVuelidate from '../../validations/InputMessageErrorVuelidate.vue';
+import type IUserFacade from '../../../application/facades/User/IUserFacade';
+import { InjectionKeys } from '../../../constants/ServiceInjectionKeys';
+
+const userFacade = inject<IUserFacade>(InjectionKeys.UserFacade);
+
+if (!userFacade) 
+    throw new Error('Cannot resolve UserFacade')
+
 
 const loginInputModel = ref<LoginViewModel>(new LoginViewModel());
 
@@ -51,6 +59,10 @@ const vuelidateObject = useVuelidate<LoginViewModel>(
   rules,
   loginInputModel
 );
+
+const sendLoginToBack = async () => {
+    await userFacade.login(loginInputModel.value);
+}
 
 </script>
 

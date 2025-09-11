@@ -1,12 +1,13 @@
 <template>
     <div>
-        <button :type="typeButton" class="btn-primary-purple" :class="complemnetaryClass" >{{ buttonText }}</button>
+        <button :type="typeButton" class="btn-primary-purple" :class="complemnetaryClass" @click="emits('click')" >{{ buttonText }}</button>
     </div>
 </template>
 
 <script setup lang="ts">
 import type { PropType } from 'vue';
 
+const emits = defineEmits(['click'])
 defineProps({
     typeButton: {
         type: String as PropType<"button" | "submit" | "reset" | undefined>,
