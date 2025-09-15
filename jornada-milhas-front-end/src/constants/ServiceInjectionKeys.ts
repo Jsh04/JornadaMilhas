@@ -8,4 +8,6 @@ export class InjectionKeys {
 
 
   static readonly HttpClient = Symbol.for("HttpClient");
+
+  static readonly RouterConfig = Symbol.for('RouterConfig');
 }

@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import { Container } from 'inversify'
 import './styles/style.css'
+import 'vue-loading-overlay/dist/css/index.css';
 import "reflect-metadata";
 import ServiceInjectionConfig from './infrastructure/di/ServiceInjectionConfig';
 import RouterConfig from './routes';
@@ -28,5 +29,6 @@ const app = createApp(App)
     }
 })
 .provide(InjectionKeys.UserFacade, userFacade)
+.provide(InjectionKeys.RouterConfig, routerConfigObject.routerObject)
 app.mount('#app')
 

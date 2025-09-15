@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory, type Router } from "vue-router";
 import EnvironmentConfig from '../infrastructure/config/EnvironmentConfig';
 import { inject, injectable } from "inversify";
-import HomeHeader from "../views/home/components/HomeHeader.vue";
 import Login from "../views/login/Login.vue";
 import Home from "../views/home/Home.vue";
 

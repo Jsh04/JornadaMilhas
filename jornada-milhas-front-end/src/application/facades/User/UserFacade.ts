@@ -3,7 +3,6 @@ import { inject, injectable } from "inversify";
 import LoginUserUseCase from "../../useCases/LoginUseCase/LoginUserUseCase";
 import type { LoginViewModel } from "../../useCases/LoginUseCase/LoginViewModel";
 import type IUserFacade from "./IUserFacade";
-import { InjectionKeys } from "../../../constants/ServiceInjectionKeys";
 
 @injectable()
 export class UserFacade implements IUserFacade{
