@@ -1,5 +1,7 @@
 import type LoginInputModel from "../inputs/LoginInputModel";
+import Result from '../../core/result/Result';
+import type LoginOutputModel from "../outputs/LoginOutputModel";
 
 export default interface IUserRepository{
-    login(loginInputModel: LoginInputModel): Promise<string>
+    login(loginInputModel: LoginInputModel): Promise<Result<LoginOutputModel>>
 }

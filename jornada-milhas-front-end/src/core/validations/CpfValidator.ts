@@ -1,6 +1,4 @@
-
-
-export class CpfUtils {
+export class CpfValidator {
 
     public static validCpf(cpf: string): boolean {
         if (!cpf)
@@ -31,5 +29,3 @@ export class CpfUtils {
         return resto < 2 ? 0 : 11 - resto;
     };
 }
-
-

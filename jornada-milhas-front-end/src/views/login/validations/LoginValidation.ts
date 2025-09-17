@@ -1,6 +1,6 @@
 
-import { CpfUtils } from "../../../utils/CpfUtils";
-import EmailUtils from "../../../utils/EmailUtils";
+import { CpfValidator } from "../../../core/validations/CpfValidator";
+import EmailValidator from "../../../core/validations/EmailValidator";
 import ValidationVuelidateBuilder from "../../validations/ValidationVuelidate"
 export const loginValidation = () => {
     return {
@@ -10,8 +10,8 @@ export const loginValidation = () => {
             if (!value) 
                 return false;
 
-            const isEmail = EmailUtils.validEmail(value);
-            const isCpf = CpfUtils.validCpf(value);
+            const isEmail = EmailValidator.validEmail(value);
+            const isCpf = CpfValidator.validCpf(value);
 
             return isEmail || isCpf;
         }, "CpfOrEmail")

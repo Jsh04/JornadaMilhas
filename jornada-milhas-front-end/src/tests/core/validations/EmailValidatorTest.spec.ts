@@ -1,4 +1,5 @@
-import EmailUtils from "../../utils/EmailUtils"
+import EmailValidator from "../../../core/validations/EmailValidator";
+
 
 
 test.each([
@@ -14,5 +15,5 @@ test.each([
   [false, "usuario@dominio..com" ],
   [false, ""]
 ])("validEmail_ShouldBeReturn %s_WhenEmailPassedIs %s", (expected: boolean, value: string) => {
-    expect(EmailUtils.validEmail(value)).toBe(expected);
+    expect(EmailValidator.validEmail(value)).toBe(expected);
 })

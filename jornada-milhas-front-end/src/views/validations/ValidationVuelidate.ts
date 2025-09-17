@@ -4,7 +4,7 @@
 import type { ValidationRule } from "@vuelidate/core";
 
 import { email, required, minLength, sameAs, minValue, helpers } from "@vuelidate/validators";
-import { CpfUtils } from "../../utils/CpfUtils";
+import { CpfValidator } from "../../core/validations/CpfValidator";
 
 type ValidatorObject = Record<string, ValidationRule>;
 
@@ -48,7 +48,7 @@ export default class ValidationVuelidateBuilder {
 
     public addCpf(message: string, key: string = "cpf") {
         this.listValidators.push({
-            [key]: helpers.withMessage(message, (value: string) => CpfUtils.validCpf(value))
+            [key]: helpers.withMessage(message, (value: string) => CpfValidator.validCpf(value))
         });
         return this;
     }

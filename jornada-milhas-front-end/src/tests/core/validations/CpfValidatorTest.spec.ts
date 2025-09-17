@@ -1,8 +1,9 @@
-import { CpfUtils } from "../../utils/CpfUtils";
+import { CpfValidator } from "../../../core/validations/CpfValidator";
+
 
 test("validCpf_SholdBeTrue_WhenValidCpf", () => {
     const cpfValido = '12345678909';
-    expect(CpfUtils.validCpf(cpfValido)).toBe(true);
+    expect(CpfValidator.validCpf(cpfValido)).toBe(true);
 })
 
 test.each([
@@ -12,7 +13,7 @@ test.each([
     [false, "102345"]
 ])
     ("validCpf_SholdBe_%s_WhenCpfIs %s", (expected, cpf) => {
-     expect(CpfUtils.validCpf(cpf as string)).toBe(expected as boolean);
+     expect(CpfValidator.validCpf(cpf as string)).toBe(expected as boolean);
 })
 
 

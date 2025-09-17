@@ -47,9 +47,9 @@ import { computed, inject, ref } from 'vue';
 import ButtonPrimary from '../../../shared/components/buttons/ButtonPrimary.vue';
 import useVuelidate from '@vuelidate/core';
 import { loginValidation } from '../validations/LoginValidation';
-import InputMessageErrorVuelidate from '../../validations/InputMessageErrorVuelidate.vue';
 import type IUserFacade from '../../../application/facades/User/IUserFacade';
 import { InjectionKeys } from '../../../constants/ServiceInjectionKeys';
+import InputMessageErrorVuelidate from '../../../shared/components/validators/InputMessageErrorVuelidate.vue';
 
 
 const userFacade = inject<IUserFacade>(InjectionKeys.UserFacade);

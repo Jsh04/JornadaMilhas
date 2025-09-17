@@ -1,28 +1,30 @@
-import type { AxiosInstance } from "axios";
+import type { AxiosError, AxiosInstance } from "axios";
 import axios from "axios";
 import { inject, injectable } from "inversify";
 import EnvironmentConfig from '../config/EnvironmentConfig';
+import type ProblemDetails from "./ProblemsDetails";
+import Result from "../../core/result/Result";
 
 
 @injectable()
 export default class HttpClient {
 
-    private httpClient: AxiosInstance;
+    private readonly _httpClient: AxiosInstance;
     private readonly environmentConfig: EnvironmentConfig
     
     constructor(@inject(EnvironmentConfig) environmentConfig: EnvironmentConfig) {
         this.environmentConfig = environmentConfig;
-        this.httpClient = this.getInstanceAxios(this.environmentConfig)
+        this._httpClient = this.getInstanceAxios(this.environmentConfig)
         this.setConfigRequest();
+        this.setConfigResponse();
     }
 
-
-    get instanceHttpClient(){
-        return this.httpClient;
+    get httpClient(){
+        return this._httpClient;
     }
 
-    setConfigRequest() {
-        this.httpClient.interceptors.request.use(
+    private setConfigRequest() {
+        this._httpClient.interceptors.request.use(
             (config) => {
                 if (this.environmentConfig.isDevelopment() && this.environmentConfig.get('ENABLE_DEBUG'))
                     console.log('🚀 Request:', {
@@ -46,6 +48,25 @@ export default class HttpClient {
         );
     }
 
+    private setConfigResponse() {
+        this._httpClient.interceptors.response.use((config) => {
+            return config;
+        }, (error) => {
+
+            if (this.environmentConfig.isDevelopment()) 
+                console.error('❌ Request Error:', error);
+
+            const errorAxios = error as AxiosError;
+
+            if (!errorAxios.response) 
+                return this.returnDefaultResultFail(errorAxios.status || 0, "Erro inesperado, tente novamente mais tarde", "Erro inesperado!")
+            
+            const problemsDetails = errorAxios.response?.data as ProblemDetails
+
+            return this.returnDefaultResultFail(errorAxios.status || 0,  problemsDetails.detail, problemsDetails.title);
+        })
+    }
+
     private getInstanceAxios(environmentConfig: EnvironmentConfig): AxiosInstance {
         return axios.create({
             baseURL: environmentConfig.getApiUrl(),
@@ -55,5 +76,9 @@ export default class HttpClient {
                 'X-App-Version': environmentConfig.get('APP_VERSION'),
             }
         });
+    }
+
+    private returnDefaultResultFail<T>(statusCode: number, message: string, title: string): Promise<Result<T>>{
+        return Promise.reject(Result.fail({ statusCode, message, title }));
     }
 }

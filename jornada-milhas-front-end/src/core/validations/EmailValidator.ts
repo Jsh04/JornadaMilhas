@@ -1,4 +1,4 @@
-export default class EmailUtils{
+export default class EmailValidator{
 
     public static validEmail(emailValue: string){
         if (!emailValue) return false;
