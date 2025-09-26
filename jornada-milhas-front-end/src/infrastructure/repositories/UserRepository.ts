@@ -4,7 +4,7 @@ import type IUserRepository from "../../domain/repositories/IUserRepository";
 import HttpClient from "../api/HttpClient";
 import { type AxiosInstance } from 'axios';
 import Result from '../../core/result/Result';
-import type LoginOutputModel from '../../domain/outputs/LoginOutputModel';
+import type LoginOutputModel from '../../domain/outputs/Authentication/Login/LoginOutputModel';
 
 @injectable()
 export class UserRepository implements IUserRepository{
