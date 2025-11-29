@@ -3,8 +3,9 @@ import type LoginInputModel from "../../domain/inputs/LoginInputModel";
 import type IUserRepository from "../../domain/repositories/IUserRepository";
 import HttpClient from "../api/HttpClient";
 import { type AxiosInstance } from 'axios';
-import Result from '../../core/result/Result';
+
 import type LoginOutputModel from '../../domain/outputs/Authentication/Login/LoginOutputModel';
+import { ResultValue } from '../../core/result/Result';
 
 @injectable()
 export class UserRepository implements IUserRepository{
@@ -15,13 +16,13 @@ export class UserRepository implements IUserRepository{
         this.httpClient = httpConfig.httpClient;
     }
     
-    async login(loginInputModel: LoginInputModel): Promise<Result<LoginOutputModel>> {
+    async login(loginInputModel: LoginInputModel): Promise<ResultValue<LoginOutputModel>> {
 
         try {
             const response = await this.httpClient.post<LoginOutputModel>('/login', loginInputModel);
-            return Result.ok(response.data);
+            return ResultValue.ok<LoginOutputModel>(response.data);
         } catch (error) {
-            return error as Result<LoginOutputModel>;
+            return error as ResultValue<LoginOutputModel>;
         }
     }
 

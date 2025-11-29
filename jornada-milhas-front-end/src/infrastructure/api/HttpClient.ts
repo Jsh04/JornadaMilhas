@@ -3,7 +3,8 @@ import axios from "axios";
 import { inject, injectable } from "inversify";
 import EnvironmentConfig from '../config/EnvironmentConfig';
 import type ProblemDetails from "./ProblemsDetails";
-import Result from "../../core/result/Result";
+import { Result } from "../../core/result/Result";
+
 
 
 @injectable()
@@ -34,6 +35,7 @@ export default class HttpClient {
                         data: config.data,
                     });
                 const token = localStorage.getItem('auth_token');
+                
                 if (token) 
                     config.headers.Authorization = `Bearer ${token}`;
                 
@@ -78,7 +80,7 @@ export default class HttpClient {
         });
     }
 
-    private returnDefaultResultFail<T>(statusCode: number, message: string, title: string): Promise<Result<T>>{
+    private returnDefaultResultFail(statusCode: number, message: string, title: string): Promise<Result>{
         return Promise.reject(Result.fail({ statusCode, message, title }));
     }
 }

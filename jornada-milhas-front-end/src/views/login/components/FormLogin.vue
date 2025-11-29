@@ -50,9 +50,12 @@ import { loginValidation } from '../validations/LoginValidation';
 import type IUserFacade from '../../../application/facades/User/IUserFacade';
 import { InjectionKeys } from '../../../constants/ServiceInjectionKeys';
 import InputMessageErrorVuelidate from '../../../shared/components/validators/InputMessageErrorVuelidate.vue';
+import Swal from 'sweetalert2';
+import ResultExtensions from '../../extensions/ResultExtensions';
 
 
 const userFacade = inject<IUserFacade>(InjectionKeys.UserFacade);
+
 
 if (!userFacade)
     throw new Error('Cannot resolve UserFacade')
@@ -71,9 +74,18 @@ const vuelidateObject = useVuelidate<LoginViewModel>(
 const sendLoginToBack = async () => {
     isLoading.value = true;
     try {
-        await userFacade.login(loginInputModel.value);
-    } catch {
-        
+        var result =  await userFacade.login(loginInputModel.value);
+    
+        if (result.isFailure){
+            ResultExtensions.fireSwalError(result);
+            return;
+        }
+
+        Swal.fire({
+            text: "Login feito com sucesso!",
+            icon: "success"
+        })
+
     } finally {
         isLoading.value = !isLoading.value
     }

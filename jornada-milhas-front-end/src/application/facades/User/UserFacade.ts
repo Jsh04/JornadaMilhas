@@ -3,6 +3,8 @@ import { inject, injectable } from "inversify";
 import LoginUserUseCase from "../../useCases/LoginUseCase/LoginUserUseCase";
 import type { LoginViewModel } from "../../useCases/LoginUseCase/LoginViewModel";
 import type IUserFacade from "./IUserFacade";
+import type { Result } from "../../../core/result/Result";
+
 
 @injectable()
 export class UserFacade implements IUserFacade{
@@ -13,9 +15,10 @@ export class UserFacade implements IUserFacade{
         this.loginUseCase = loginUseCase;
     }
 
-    public async login(loginViewModel: LoginViewModel): Promise<string> {
-        await this.loginUseCase.execute(loginViewModel);
-        return "";
+    public async login(loginViewModel: LoginViewModel): Promise<Result> {
+        var result = await this.loginUseCase.execute(loginViewModel);
+        
+        return result;
     }
 
 }

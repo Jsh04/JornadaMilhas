@@ -2,17 +2,22 @@ import { inject, injectable } from "inversify";
 import type IUserRepository from "../../../domain/repositories/IUserRepository";
 import { InjectionKeys } from "../../../constants/ServiceInjectionKeys";
 import type { LoginViewModel } from "./LoginViewModel";
-import Result from "../../../core/result/Result";
+
+import type IUserSessionRepository from "../../../domain/repositories/IUserSessionRepository";
+import { Result } from "../../../core/result/Result";
+
 
 
 @injectable()
 export default class LoginUserUseCase{
 
-
     private readonly userRepository: IUserRepository;
+    private readonly userSessionRepository : IUserSessionRepository
 
-    constructor(@inject(InjectionKeys.UserRepository) userRepository: IUserRepository){
+    constructor(@inject(InjectionKeys.UserRepository) userRepository: IUserRepository, 
+    @inject(InjectionKeys.UserSessionRepository) authorizationService: IUserSessionRepository){
         this.userRepository = userRepository;
+        this.userSessionRepository = authorizationService;
     }
 
     async execute(loginViewModel: LoginViewModel){
@@ -21,6 +26,9 @@ export default class LoginUserUseCase{
         if (responseResult.isFailure) 
             return Result.fail(responseResult.error);
         
+        this.userSessionRepository.saveSession(responseResult.value);
+        
+        return Result.ok();
     }
 
 }

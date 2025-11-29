@@ -4,7 +4,7 @@ import { Container } from 'inversify'
 import './styles/style.css'
 import 'vue-loading-overlay/dist/css/index.css';
 import "reflect-metadata";
-import ServiceInjectionConfig from './infrastructure/di/ServiceInjectionConfig';
+import ServiceInjectionConfig from './di/ServiceInjectionConfig';
 import RouterConfig from './routes';
 import PrimeVue from 'primevue/config';
 import Aura from '@primeuix/themes/aura';
@@ -30,5 +30,6 @@ const app = createApp(App)
 })
 .provide(InjectionKeys.UserFacade, userFacade)
 .provide(InjectionKeys.RouterConfig, routerConfigObject.routerObject)
+
 app.mount('#app')
 
