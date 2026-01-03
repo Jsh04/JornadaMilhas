@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import HomeFooter from './views/home/components/HomeFooter.vue';
 import HomeHeader from './views/home/components/HomeHeader.vue';
 
   
@@ -10,6 +11,7 @@ import HomeHeader from './views/home/components/HomeHeader.vue';
     <main>
       <router-view></router-view>
     </main>
+    <HomeFooter />
   </div>
  
   

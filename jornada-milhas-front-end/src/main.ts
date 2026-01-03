@@ -7,6 +7,7 @@ import "reflect-metadata";
 import ServiceInjectionConfig from './di/ServiceInjectionConfig';
 import RouterConfig from './routes';
 import PrimeVue from 'primevue/config';
+import 'primeicons/primeicons.css'
 import Aura from '@primeuix/themes/aura';
 import { InjectionKeys } from './constants/ServiceInjectionKeys';
 import type IUserFacade from './application/facades/User/IUserFacade';

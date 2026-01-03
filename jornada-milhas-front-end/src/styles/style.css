@@ -6,7 +6,8 @@
 @tailwind utilities;
 
 @theme {
-  --color-purple-primary: #6750A4
+  --color-purple-primary: #6750A4;
+  --color-white-neutral-c: #F5F5F5;
 }
 
 @layer base {
