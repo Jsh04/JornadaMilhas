@@ -16,13 +16,13 @@
         </div>
         <div class="grid grid-rows-2 gap-y-2">
             <div>
-                <p class="text-white-neutral-c">Acesse nossas redes:</p>
+                <p class="text-white-neutral-c text-base font-normal">Acesse nossas redes:</p>
             </div>
             <div>
                 <ul class="list-none flex gap-x-4 justify-center">
-                    <li class="text-white-neutral-c"><i class="pi pi-whatsapp !text-xl"></i></li>
-                    <li class="text-white-neutral-c"><i class="pi pi-instagram !text-xl"></i></li>
-                    <li class="text-white-neutral-c"><i class="pi pi-twitter !text-xl"></i></li>
+                    <li class="text-white-neutral-c cursor-pointer"><i class="pi pi-whatsapp !text-xl"></i></li>
+                    <li class="text-white-neutral-c cursor-pointer"><i class="pi pi-instagram !text-xl"></i></li>
+                    <li class="text-white-neutral-c cursor-pointer"><i class="pi pi-twitter !text-xl"></i></li>
                 </ul>
             </div>
         </div>

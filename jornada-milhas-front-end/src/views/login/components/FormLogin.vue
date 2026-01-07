@@ -1,14 +1,14 @@
 <template>
     <section class="flex-1 flex justify-center items-center">
         <Loading is-full-page v-model:active="isLoading" loader="spinner" :can-cancel="false" :color="'#6750A4'"> </Loading>
-        <article class="min-h-[50vh] min-w-[40vw] shadow-container rounded-xl grid grid-rows-[1fr_auto] p-8">
+        <article class="min-h-[50vh] min-w-[40vw] shadow-container p-8">
             <div class="grid grid-cols-2 items-center p-4">
                 <div
                     class="bg-[url(/src/assets/Simbolo-laranja.png)] bg-cover bg-center bg-no-repeat w-[200px] h-[200px] place-self-center">
                 </div>
                 <div class="grid grid-rows-3 gap-y-8">
                     <div>
-                        <h2 class="text-3xl text-[#1D1B20] font-medium">Login</h2>
+                        <h2 class="text-4xl text-[#1D1B20] font-medium">Login</h2>
                     </div>
                     <div>
                         <InputText id-input="emailOrCpf" placeholder-input="Digite seu e-mail ou CPF"
@@ -74,9 +74,9 @@ const vuelidateObject = useVuelidate<LoginViewModel>(
 const sendLoginToBack = async () => {
     isLoading.value = true;
     try {
-        var result =  await userFacade.login(loginInputModel.value);
+        var result = await userFacade.login(loginInputModel.value);
     
-        if (result.isFailure){
+        if (result.isFailure) {
             ResultExtensions.fireSwalError(result);
             return;
         }
@@ -93,9 +93,3 @@ const sendLoginToBack = async () => {
 }
 
 </script>
-
-<style scoped>
-.shadow-container {
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-</style>
