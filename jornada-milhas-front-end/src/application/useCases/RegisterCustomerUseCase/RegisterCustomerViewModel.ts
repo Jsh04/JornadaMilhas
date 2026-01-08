@@ -4,5 +4,11 @@ export class RegisterCustomerViewModel{
     genre = ''
     cpf = ''
     phone = ''
-    state = ''
+    city = '';
+    state = '';
+    email = '';
+    emailConfirm = '';
+    password = '';
+    passwordConfirm = '';
+    confirmrReadTerms = false
 }
