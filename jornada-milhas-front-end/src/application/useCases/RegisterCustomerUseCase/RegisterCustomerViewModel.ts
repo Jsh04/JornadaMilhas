@@ -1,7 +1,7 @@
 export class RegisterCustomerViewModel{
     name: string = ''
     dtBirth = ''
-    genre = ''
+    genre = '1'
     cpf = ''
     phone = ''
     city = '';

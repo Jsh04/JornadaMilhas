@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+import VueTheMask from 'vue-the-mask'
 import { Container } from 'inversify'
 import './styles/style.css'
 import 'vue-loading-overlay/dist/css/index.css';
@@ -11,6 +12,7 @@ import 'primeicons/primeicons.css'
 import Aura from '@primeuix/themes/aura';
 import { InjectionKeys } from './constants/ServiceInjectionKeys';
 import type IUserFacade from './application/facades/User/IUserFacade';
+
 
 const container = new Container();
 
@@ -29,6 +31,7 @@ const app = createApp(App)
         }
     }
 })
+.use(VueTheMask)
 .provide(InjectionKeys.UserFacade, userFacade)
 .provide(InjectionKeys.RouterConfig, routerConfigObject.routerObject)
 

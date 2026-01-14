@@ -1,9 +1,28 @@
 <template>
     <div>
         <div class="relative">
-            <input :type="typeInput" :id="idInput" :placeholder="placeholderInput" v-model="inputValue"
-                :class="complementaryClasses" class="input-text-primary" @blur="emits('blur')" />
-            <label for="email"
+            <input 
+                :type="typeInput" 
+                :id="idInput" 
+                :placeholder="placeholderInput" 
+                v-model="inputValue"
+                :class="complementaryClasses" 
+                class="input-text-primary" 
+                v-mask="maskPattern"
+                v-if="maskPattern"
+                @blur="emits('blur')" 
+            />
+            <input 
+                :type="typeInput" 
+                :id="idInput" 
+                :placeholder="placeholderInput" 
+                v-model="inputValue"
+                :class="complementaryClasses" 
+                class="input-text-primary" 
+                v-else
+                @blur="emits('blur')" 
+            />
+            <label :for="idInput"
                 class="absolute left-4 -top-2 px-1 bg-white text-gray-500 text-base focus:text-purple-primary">
                 {{ labelInput }}
             </label>
@@ -38,6 +57,11 @@ const props = defineProps({
         type: String,
         required: false,
         default: () => "text"
+    },
+    maskPattern: {
+        type: String,
+        required: false,
+        default: () => ''
     },
     complementaryClasses: {
         type: Array as PropType<string[]>,

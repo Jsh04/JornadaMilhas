@@ -3,51 +3,87 @@
     <div class="shadow-container w-full p-8 ">
       <h2 class="text-4xl text-center font-medium mb-8">Crie sua conta</h2>
       <form @submit.prevent="handlerSubmit()" class="space-y-8 md:space-y-6">
-        <InputText type-input="text" v-model="registerCustomerViewModel.name" label-input="Nome: " id-input="name"
+        <InputText type-input="text" v-model="registerCustomerViewModel.name" label-input="Nome*: " id-input="name"
           :placeholder-input="'Digite seu nome completo'" @blur="vuelidateObject.name.$touch()">
           <template #validation>
             <InputMessageErrorVuelidate :validate-object="vuelidateObject.name" />
           </template>
         </InputText>
         <div class="flex flex-col md:grid md:grid-cols-2 gap-8">
-          <InputText type-input="date" :label-input="'Data de Nascimento: '" v-model="registerCustomerViewModel.dtBirth"
-            id-input="dtBirth" @blur="vuelidateObject.dtBirth.$touch()" >
-              <template #validation>
-                <InputMessageErrorVuelidate :validate-object="vuelidateObject.dtBirth" />
-              </template>
+          <InputText type-input="date" :label-input="'Data de Nascimento*: '"
+            v-model="registerCustomerViewModel.dtBirth" id-input="dtBirth" @blur="vuelidateObject.dtBirth.$touch()">
+            <template #validation>
+              <InputMessageErrorVuelidate :validate-object="vuelidateObject.dtBirth" />
+            </template>
           </InputText>
           <div class="flex flex-col md:flex-row gap-y-2 ">
             <p class="text-[#49454F]">Gênero: </p>
             <div v-for="genres in listsTypesGenre" :key="genres.key" class="flex items-center gap-2">
-              <RadioButton v-model="registerCustomerViewModel.genre" :inputId="genres.key" name="dynamic"
-                :value="genres.name" />
+              <RadioButton v-model="registerCustomerViewModel.genre" :inputId="genres.key" name="genre"
+                :value="genres.key" />
               <label :for="genres.key">{{ genres.name }}</label>
             </div>
           </div>
         </div>
         <div class="flex flex-col md:grid md:grid-cols-2 gap-8">
-          <InputText type-input="text" :label-input="'CPF: '" v-model="registerCustomerViewModel.cpf" id-input="cpf" />
-          <InputText type-input="text" :label-input="'Telefone: '" v-model="registerCustomerViewModel.phone"
-            id-input="phone" />
+          <InputText type-input="text" :label-input="'CPF: '" v-model="registerCustomerViewModel.cpf" id-input="cpf"
+            :mask-pattern="'###.###.###-##'" @blur="vuelidateObject.cpf.$touch()">
+            <template #validation>
+              <InputMessageErrorVuelidate :validate-object="vuelidateObject.cpf" />
+            </template>
+          </InputText>
+          <InputText type-input="text" :label-input="'Telefone: '" :mask-pattern="'(##) #####-####'"
+            v-model="registerCustomerViewModel.phone" id-input="phone" @blur="vuelidateObject.phone.$touch()">
+            <template #validation>
+              <InputMessageErrorVuelidate :validate-object="vuelidateObject.phone" />
+            </template>
+          </InputText>
         </div>
         <div class="flex flex-col md:grid md:grid-cols-2 gap-8">
           <InputText type-input="text" :label-input="'Cidade: '" v-model="registerCustomerViewModel.city"
-            id-input="state" />
+            id-input="state" @blur="vuelidateObject.city.$touch()">
+            <template #validation>
+              <InputMessageErrorVuelidate :validate-object="vuelidateObject.city" />
+            </template>
+          </InputText>
           <Select v-model="registerCustomerViewModel.state" id="'state'" label="Estado" :list-options="refListOptions"
-            :placeholder="'Selecione seu estado'">
+            :placeholder="'Selecione seu estado'" @change="vuelidateObject.state.$touch()">
+            <template #validation>
+              <InputMessageErrorVuelidate :validate-object="vuelidateObject.state" />
+            </template>
           </Select>
+
         </div>
         <div class="flex flex-col md:grid md:grid-cols-2 gap-8">
           <InputText type-input="email" :label-input="'Email: '" v-model="registerCustomerViewModel.email"
-            id-input="email" />
+            id-input="email" @blur="vuelidateObject.email.$touch()">
+            <template #validation>
+              <InputMessageErrorVuelidate :validate-object="vuelidateObject.email" />
+            </template>
+          </InputText>
           <InputText type-input="email" :label-input="'Confirmar e-mail: '"
-            v-model="registerCustomerViewModel.emailConfirm" id-input="emailConfirm" />
+            v-model="registerCustomerViewModel.emailConfirm" id-input="emailConfirm"
+            @blur="vuelidateObject.emailConfirm.$touch()">
+            <template #validation>
+              <InputMessageErrorVuelidate :validate-object="vuelidateObject.emailConfirm" />
+            </template>
+          </InputText>
         </div>
         <div class="flex flex-col md:grid md:grid-cols-2 gap-8">
           <InputText type-input="password" :label-input="'Senha: '" v-model="registerCustomerViewModel.password"
-            id-input="password" />
+            id-input="password" @blur="vuelidateObject.password.$touch()">
+            <template #validation>
+              <InputMessageErrorVuelidate :validate-object="vuelidateObject.password" />
+            </template>
+          </InputText>
+
           <InputText type-input="password" :label-input="'Confirmar Senha: '"
-            v-model="registerCustomerViewModel.passwordConfirm" id-input="passwordConfirm" />
+            v-model="registerCustomerViewModel.passwordConfirm" id-input="passwordConfirm"
+            @blur="vuelidateObject.passwordConfirm.$touch()">
+            <template #validation>
+              <InputMessageErrorVuelidate :validate-object="vuelidateObject.passwordConfirm" />
+            </template>
+          </InputText>
         </div>
         <div class="flex gap-x-4 ">
           <Checkbox v-model="registerCustomerViewModel.confirmrReadTerms" binary input-id="confirmrReadTerms" />
@@ -64,7 +100,7 @@
 
 <script setup lang="ts">
 
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import InputText from '../../../shared/components/inputs/InputText.vue';
 import { RegisterCustomerViewModel } from '../../../application/useCases/RegisterCustomerUseCase/RegisterCustomerViewModel';
 import RadioButton from 'primevue/radiobutton';
@@ -116,7 +152,7 @@ const refListOptions = ref<ISelectOption[]>(listOptionsSelectState)
 
 const registerCustomerViewModel = ref<RegisterCustomerViewModel>(new RegisterCustomerViewModel());
 
-const rules = computed(() => CustomerRegisterValidation());
+const rules = computed(() => CustomerRegisterValidation(registerCustomerViewModel.value));
 
 const vuelidateObject = useVuelidate<RegisterCustomerViewModel>(
   rules,
@@ -124,7 +160,7 @@ const vuelidateObject = useVuelidate<RegisterCustomerViewModel>(
 );
 
 const handlerSubmit = () => {
-  console.log('Funcionando o click');
+  console.log(registerCustomerViewModel.value);
 }
 
 </script>
