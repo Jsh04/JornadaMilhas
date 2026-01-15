@@ -1,6 +1,6 @@
 <template>
-  <section class="p-4">
-    <div class="shadow-container w-full p-8 ">
+  <section class="p-4 md:p-8 flex justify-center">
+    <div class="shadow-container w-full md:w-auto md:max-w-[800px] p-8 ">
       <h2 class="text-4xl text-center font-medium mb-8">Crie sua conta</h2>
       <form @submit.prevent="handlerSubmit()" class="space-y-8 md:space-y-6">
         <InputText type-input="text" v-model="registerCustomerViewModel.name" label-input="Nome*: " id-input="name"
@@ -16,12 +16,14 @@
               <InputMessageErrorVuelidate :validate-object="vuelidateObject.dtBirth" />
             </template>
           </InputText>
-          <div class="flex flex-col md:flex-row gap-y-2 ">
+          <div>
             <p class="text-[#49454F]">Gênero: </p>
-            <div v-for="genres in listsTypesGenre" :key="genres.key" class="flex items-center gap-2">
-              <RadioButton v-model="registerCustomerViewModel.genre" :inputId="genres.key" name="genre"
-                :value="genres.key" />
-              <label :for="genres.key">{{ genres.name }}</label>
+            <div class="flex flex-col md:flex-row gap-4 ">
+              <div v-for="genres in listsTypesGenre" :key="genres.key" class="flex items-center gap-2">
+                <RadioButton v-model="registerCustomerViewModel.genre" :inputId="genres.key" name="genre"
+                  :value="genres.key" />
+                <label :for="genres.key">{{ genres.name }}</label>
+              </div>
             </div>
           </div>
         </div>
@@ -100,7 +102,7 @@
 
 <script setup lang="ts">
 
-import { computed, ref, watch } from 'vue';
+import { computed, ref } from 'vue';
 import InputText from '../../../shared/components/inputs/InputText.vue';
 import { RegisterCustomerViewModel } from '../../../application/useCases/RegisterCustomerUseCase/RegisterCustomerViewModel';
 import RadioButton from 'primevue/radiobutton';
@@ -111,6 +113,7 @@ import ButtonPrimary from '../../../shared/components/buttons/ButtonPrimary.vue'
 import CustomerRegisterValidation from '../validations/CustomerRegisterValidation';
 import useVuelidate from '@vuelidate/core';
 import InputMessageErrorVuelidate from '../../../shared/components/validators/InputMessageErrorVuelidate.vue';
+import Swal from 'sweetalert2';
 
 const listsTypesGenre = [
   { name: "Masculino", key: '1' },
@@ -160,7 +163,12 @@ const vuelidateObject = useVuelidate<RegisterCustomerViewModel>(
 );
 
 const handlerSubmit = () => {
-  console.log(registerCustomerViewModel.value);
+  const objectSendForms = registerCustomerViewModel.value;
+
+  if (!objectSendForms.confirmrReadTerms) {
+    Swal.fire('Por favor, confirme que você leu nossos termos e condições', "", "warning")
+    return;
+  }
 }
 
 </script>
