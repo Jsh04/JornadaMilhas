@@ -13,6 +13,11 @@ import LocalStorageRepository from "../infrastructure/adapters/storages/LocalSto
 import UserSessionRepository from '../infrastructure/adapters/UserSessionRepository';
 import type IUserSessionRepository from "../domain/repositories/IUserSessionRepository";
 import AuthorizationService from "../application/services/AuthorizationService";
+import type { INotificationService } from "../application/interfaces/services/INotificationService";
+import SweetAlertNotificationService from "../infrastructure/adapters/services/SweetAlertNotificationService";
+import type ICustomerRepository from "../domain/repositories/ICustomerRepository";
+import CustomerRepository from '../infrastructure/repositories/CustomerRepository';
+import RegisterCustomerUseCase from "../application/useCases/RegisterCustomerUseCase/RegisterCustomerUseCase";
 
 export default class ServiceInjectionConfig{
 
@@ -37,11 +42,13 @@ export default class ServiceInjectionConfig{
 
     private static addContainerBindsOfUseCasesToInjection(container: Container){
         container.bind<LoginUserUseCase>(LoginUserUseCase).toSelf().inTransientScope();
+        container.bind<RegisterCustomerUseCase>(RegisterCustomerUseCase).toSelf().inTransientScope();
     }
 
     private static addContainerBindsOfRepositoriesToInjection(container: Container){
         container.bind<IUserRepository>(InjectionKeys.UserRepository).to(UserRepository);
         container.bind<IUserSessionRepository>(InjectionKeys.UserSessionRepository).to(UserSessionRepository);
+        container.bind<ICustomerRepository>(InjectionKeys.CustomerRepository).to(CustomerRepository)
     }
 
     private static addStorageBindsOfRepositoryToInjection(container: Container){
@@ -56,5 +63,6 @@ export default class ServiceInjectionConfig{
 
     private static addContainerBindsToServices(container: Container){
         container.bind<AuthorizationService>(AuthorizationService).toSelf().inTransientScope();
+        container.bind<INotificationService>(InjectionKeys.NotificationService).to(SweetAlertNotificationService).inSingletonScope()
     }
 }

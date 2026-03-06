@@ -53,9 +53,7 @@ import InputMessageErrorVuelidate from '../../../shared/components/validators/In
 import Swal from 'sweetalert2';
 import ResultExtensions from '../../extensions/ResultExtensions';
 
-
 const userFacade = inject<IUserFacade>(InjectionKeys.UserFacade);
-
 
 if (!userFacade)
     throw new Error('Cannot resolve UserFacade')

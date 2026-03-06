@@ -1,5 +1,6 @@
 <template>
   <section class="p-4 md:p-8 flex justify-center">
+    <Loading is-full-page v-model:active="isLoading" loader="spinner" :can-cancel="false" :color="'#6750A4'"> </Loading>
     <div class="shadow-container w-full md:w-auto md:max-w-[800px] p-8 ">
       <h2 class="text-4xl text-center font-medium mb-8">Crie sua conta</h2>
       <form @submit.prevent="handlerSubmit()" class="space-y-8 md:space-y-6">
@@ -102,7 +103,7 @@
 
 <script setup lang="ts">
 
-import { computed, ref } from 'vue';
+import { computed, inject, ref } from 'vue';
 import InputText from '../../../shared/components/inputs/InputText.vue';
 import { RegisterCustomerViewModel } from '../../../application/useCases/RegisterCustomerUseCase/RegisterCustomerViewModel';
 import RadioButton from 'primevue/radiobutton';
@@ -113,7 +114,10 @@ import ButtonPrimary from '../../../shared/components/buttons/ButtonPrimary.vue'
 import CustomerRegisterValidation from '../validations/CustomerRegisterValidation';
 import useVuelidate from '@vuelidate/core';
 import InputMessageErrorVuelidate from '../../../shared/components/validators/InputMessageErrorVuelidate.vue';
-import Swal from 'sweetalert2';
+import type { INotificationService } from '../../../application/interfaces/services/INotificationService';
+import { InjectionKeys } from '../../../constants/ServiceInjectionKeys';
+import Loading from 'vue-loading-overlay';
+import type IUserFacade from '../../../application/facades/User/IUserFacade';
 
 const listsTypesGenre = [
   { name: "Masculino", key: '1' },
@@ -151,9 +155,17 @@ const listOptionsSelectState: ISelectOption[] = [
   { value: 'TO', name: 'Tocantins' }
 ];
 
+const notificationAlertService = inject<INotificationService>(InjectionKeys.NotificationService);
+const userFacade = inject<IUserFacade>(InjectionKeys.UserFacade);
+
+if (!userFacade || !notificationAlertService)
+    throw new Error('Cannot resolve UserFacade Or notificationAlertService')
+
 const refListOptions = ref<ISelectOption[]>(listOptionsSelectState)
 
 const registerCustomerViewModel = ref<RegisterCustomerViewModel>(new RegisterCustomerViewModel());
+
+const isLoading = ref<boolean>(false);
 
 const rules = computed(() => CustomerRegisterValidation(registerCustomerViewModel.value));
 
@@ -162,13 +174,35 @@ const vuelidateObject = useVuelidate<RegisterCustomerViewModel>(
   registerCustomerViewModel
 );
 
-const handlerSubmit = () => {
+const handlerSubmit = async () => {
   const objectSendForms = registerCustomerViewModel.value;
 
   if (!objectSendForms.confirmrReadTerms) {
-    Swal.fire('Por favor, confirme que você leu nossos termos e condições', "", "warning")
+    await notificationAlertService.showWarning('Por favor, confirme que você leu nossos termos e condições', "")
     return;
   }
-}
 
+  if(vuelidateObject.value.$invalid){
+    await notificationAlertService.showError('Formulário inválido, verifique as informações e tente novamente', "")
+    return;
+  }
+
+  isLoading.value = true;
+
+  try {
+    const resultRegister = await userFacade.customerRegister(objectSendForms);
+
+    if (resultRegister.isSuccess) {
+      await notificationAlertService.showSuccess("Usuário cadastrado com sucesso")
+      return;
+    }
+
+    isLoading.value = false;
+    
+    await notificationAlertService.showError(resultRegister.error.message, "");
+
+  } finally {
+    isLoading.value = false;
+  }
+}
 </script>

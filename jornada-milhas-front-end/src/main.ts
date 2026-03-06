@@ -12,6 +12,7 @@ import 'primeicons/primeicons.css'
 import Aura from '@primeuix/themes/aura';
 import { InjectionKeys } from './constants/ServiceInjectionKeys';
 import type IUserFacade from './application/facades/User/IUserFacade';
+import type { INotificationService }  from './application/interfaces/services/INotificationService'
 
 
 const container = new Container();
@@ -20,6 +21,7 @@ ServiceInjectionConfig.addContainerBindsToInjection(container);
 
 const routerConfigObject = container.get<RouterConfig>(RouterConfig)
 const userFacade = container.get<IUserFacade>(InjectionKeys.UserFacade);
+const notificationAlertService = container.get<INotificationService>(InjectionKeys.NotificationService);
 
 const app = createApp(App)
 .use(routerConfigObject.routerObject)
@@ -34,6 +36,6 @@ const app = createApp(App)
 .use(VueTheMask)
 .provide(InjectionKeys.UserFacade, userFacade)
 .provide(InjectionKeys.RouterConfig, routerConfigObject.routerObject)
-
+.provide(InjectionKeys.NotificationService, notificationAlertService)
 app.mount('#app')
 
