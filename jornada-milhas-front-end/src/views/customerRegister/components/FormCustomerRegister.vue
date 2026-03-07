@@ -192,14 +192,12 @@ const handlerSubmit = async () => {
   try {
     const resultRegister = await userFacade.customerRegister(objectSendForms);
 
-    if (resultRegister.isSuccess) {
-      await notificationAlertService.showSuccess("Usuário cadastrado com sucesso")
-      return;
-    }
-
     isLoading.value = false;
-    
-    await notificationAlertService.showError(resultRegister.error.message, "");
+
+    if (resultRegister.isSuccess)
+      await notificationAlertService.showSuccess("Usuário cadastrado com sucesso")
+    else
+      await notificationAlertService.showError(resultRegister.error.message, "");
 
   } finally {
     isLoading.value = false;
