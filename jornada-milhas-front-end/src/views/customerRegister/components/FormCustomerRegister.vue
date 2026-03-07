@@ -118,6 +118,7 @@ import type { INotificationService } from '../../../application/interfaces/servi
 import { InjectionKeys } from '../../../constants/ServiceInjectionKeys';
 import Loading from 'vue-loading-overlay';
 import type IUserFacade from '../../../application/facades/User/IUserFacade';
+import type { Router } from 'vue-router';
 
 const listsTypesGenre = [
   { name: "Masculino", key: '1' },
@@ -157,8 +158,10 @@ const listOptionsSelectState: ISelectOption[] = [
 
 const notificationAlertService = inject<INotificationService>(InjectionKeys.NotificationService);
 const userFacade = inject<IUserFacade>(InjectionKeys.UserFacade);
+const router = inject<Router>(InjectionKeys.RouterConfig);
 
-if (!userFacade || !notificationAlertService)
+
+if (!userFacade || !notificationAlertService || !router)
     throw new Error('Cannot resolve UserFacade Or notificationAlertService')
 
 const refListOptions = ref<ISelectOption[]>(listOptionsSelectState)
@@ -194,10 +197,14 @@ const handlerSubmit = async () => {
 
     isLoading.value = false;
 
-    if (resultRegister.isSuccess)
-      await notificationAlertService.showSuccess("Usuário cadastrado com sucesso")
-    else
+    if (resultRegister.isFailure){
       await notificationAlertService.showError(resultRegister.error.message, "");
+      return;
+    }
+    
+    await notificationAlertService.showSuccess("Usuário cadastrado com sucesso")
+    
+    router.push("/login");
 
   } finally {
     isLoading.value = false;

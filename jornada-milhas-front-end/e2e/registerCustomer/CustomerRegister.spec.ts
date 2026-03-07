@@ -2,12 +2,12 @@ import { test, expect } from '@playwright/test';
 import { faker } from '@faker-js/faker';
 import { cpf } from 'cpf-cnpj-validator';
 test('Cadastro_ShouldCreateCustomer_WhenPassedCorrectData', async ({ page }) => {
-  
+
   const email = faker.internet.email();
   const nome = "test_" + faker.person.fullName();
   const cpfrRamdon = cpf.generate();
-  await page.goto('http://localhost:5173/');
 
+  await page.goto('http://localhost:5173/');
 
   await page.getByRole('link', { name: 'Cadastre-se' }).click();
   await page.getByRole('textbox', { name: 'Nome*:' }).click();
@@ -33,7 +33,9 @@ test('Cadastro_ShouldCreateCustomer_WhenPassedCorrectData', async ({ page }) => 
   await page.getByRole('checkbox', { name: 'Li e aceito os termos e condi' }).check();
   await page.getByRole('button', { name: 'Criar minha conta' }).click();
 
-  await page.waitForSelector('.swal2-popup.swal2-modal.swal2-icon-success', { timeout: 10000 });
+  await page.waitForSelector('.swal2-popup.swal2-modal.swal2-icon-success', { timeout: 5000 });
 
   await page.getByRole('button', { name: 'OK' }).click();
+
+  await page.waitForURL('**/login', { timeout: 5000 });
 });
