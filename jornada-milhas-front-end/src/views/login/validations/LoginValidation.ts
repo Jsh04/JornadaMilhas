@@ -22,6 +22,5 @@ export const loginValidation = () => {
         .createBuild()
         .addRequired("Campo de senha é obrigatório.")
         .build()
-
     }
 }

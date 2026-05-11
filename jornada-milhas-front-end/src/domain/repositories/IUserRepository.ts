@@ -4,4 +4,5 @@ import type LoginOutputModel from "../outputs/Authentication/Login/LoginOutputMo
 
 export default interface IUserRepository{
     login(loginInputModel: LoginInputModel): Promise<ResultValue<LoginOutputModel>>
+    
 }

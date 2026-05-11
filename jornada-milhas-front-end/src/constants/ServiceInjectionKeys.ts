@@ -6,7 +6,7 @@ export class InjectionKeys {
   // Repositories
   static readonly UserRepository = Symbol.for("UserRepository");
   static readonly UserSessionRepository = Symbol.for("UserSessionRepository");
-
+  static readonly CustomerRepository = Symbol.for('CustomerRepository');
 
   static readonly HttpClient = Symbol.for("HttpClient");
 
@@ -17,4 +17,5 @@ export class InjectionKeys {
 
   //services
   static readonly AuthorizationService = Symbol.for("AuthorizationService");
+  static readonly NotificationService = Symbol.for('NotificationService');
 }

@@ -3,6 +3,7 @@ import EnvironmentConfig from '../infrastructure/config/EnvironmentConfig';
 import { inject, injectable } from "inversify";
 import Login from "../views/login/Login.vue";
 import Home from "../views/home/Home.vue";
+import CustomerRegister from "../views/customerRegister/CustomerRegister.vue";
 
 
 @injectable()
@@ -24,6 +25,10 @@ export default class RouterConfig {
                 {
                     path: '/login',
                     component: Login,
+                },
+                {
+                    path: '/cadastro',
+                    component: CustomerRegister
                 }
             ]
         })

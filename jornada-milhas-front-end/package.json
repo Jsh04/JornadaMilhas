@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
     "preview": "vite preview",
-    "test": "vitest"
+    "test": "vitest",
+    "test:e2e": "playwright test",
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@primeuix/themes": "^1.2.3",
@@ -16,15 +18,18 @@
     "@vuelidate/validators": "^2.0.4",
     "axios": "^1.11.0",
     "inversify": "^7.6.1",
+    "primeicons": "^7.0.0",
     "primevue": "^4.3.8",
     "sweetalert2": "^11.26.3",
     "tailwindcss": "^4.1.11",
     "tailwindcss-primeui": "^0.6.1",
     "vue": "^3.5.13",
     "vue-loading-overlay": "^6.0.6",
-    "vue-router": "^4.5.1"
+    "vue-router": "^4.5.1",
+    "vue-the-mask": "^0.11.1"
   },
   "devDependencies": {
+    "@faker-js/faker": "^9.9.0",
     "@playwright/test": "^1.55.0",
     "@types/node": "^24.0.3",
     "@vitejs/plugin-vue": "^5.2.3",
@@ -32,6 +37,7 @@
     "@vitest/ui": "^3.2.4",
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.7.0",
+    "cpf-cnpj-validator": "^1.0.3",
     "jsdom": "^26.1.0",
     "typescript": "~5.8.3",
     "vite": "^6.3.5",
